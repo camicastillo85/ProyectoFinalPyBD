@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Formulario de Producto</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"> <!-- Configura la visualización para que se adapte a diferentes tamaños de pantalla. -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+	<div class="container">
+	<div data-th-replace="~{layout/header :: header}"></div>
+        <h1 th:text="${#strings.isEmpty(producto.idProducto) ? 'Nuevo Producto' : 'Editar Producto'}"></h1>
+        <!--<form th:action="@{/productos/guardar}" th:object="${producto}" method="post">-->
+        <form id="compraForm" th:action="@{/productos/guardar}" th:object="${producto}" method="post">
+            <div class="mb-3">
+                <label>ID del Producto</label>
+                <input type="text" id="idProducto" th:field="*{idProducto}" data-th-readonly=${band} class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Nombre</label>
+                <input type="text" th:field="*{nombre}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Descripción</label>
+                <textarea th:field="*{descripcion}" class="form-control" rows="3" required></textarea>
+            </div>
+            <div class="mb-3">
+                <label>Precio</label>
+                <input type="number" step="0.01" th:field="*{precio}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>Stock</label>
+                <input type="number" th:field="*{stock}" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label>URL de la Imagen</label>
+                <input type="text" th:field="*{imagenUrl}" class="form-control">
+            </div>
+            <div class="text-center">
+            	<button type="submit" class="btn btn-primary">Guardar</button>
+            	<a href="/productos" class="btn btn-secondary btn-lg">Cancelar</a> <!-- Enlace para cancelar y volver a la lista de compras. -->
+        	</div>
+            
+        </form>
+    </div>
+    <script>
+	       document.addEventListener("DOMContentLoaded", function () {
+	           const form = document.getElementById("compraForm"); // ID del formulario
+	           const idInput = document.getElementById("idProducto"); // ID del campo
+	
+	           form.addEventListener("submit", function (event) {
+	               const idValue = idInput.value.trim(); // Elimina espacios en blanco al inicio o final
+	               
+	               // Verifica que el campo ID no esté vacío y contenga solo números enteros positivos
+	               if (idValue === "" || !/^\d+$/.test(idValue)) {
+	                   event.preventDefault(); // Evita el envío del formulario si no cumple las condiciones
+	                   alert("El ID debe ser un número entero positivo y no puede estar vacío.");
+	               }
+	           });
+	       });
+	   </script>
+	   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>
