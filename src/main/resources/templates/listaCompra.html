@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Declaración del tipo de documento y configuración de la codificación -->
+    <meta charset="UTF-8">
+
+    <!-- Título de la página -->
+    <title>Lista de Compras</title>
+
+    <!-- Configuración para adaptar la visualización a diferentes tamaños de pantalla -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Inclusión de Bootstrap desde CDN para estilos predefinidos -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
+          rel="stylesheet" 
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" 
+          crossorigin="anonymous">
+</head>
+<body>
+    <!-- Contenedor principal para centrar el contenido -->
+    <div class="container">
+        <!-- Inclusión del encabezado reutilizable con Thymeleaf -->
+        <div data-th-replace="~{layout/header :: header}"></div>
+
+        <!-- Título principal -->
+        <h1 class="my-4">Historial de Compras</h1>
+
+        <!-- Botón para agregar una nueva compra -->
+        <a href="/compras/nueva" class="btn btn-primary mb-3">Nueva Compra</a>
+
+        <!-- Tabla para mostrar el historial de compras -->
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <!-- Encabezados de la tabla -->
+                    <th>ID Compra</th>
+                    <th>Cliente</th>
+                    <th>Producto</th>
+                    <th>Stock</th>
+                    <th>Precio Unit</th>
+                    <th>Estado</th>
+                    <th>Fecha</th>
+                    <th>Cantidad</th>
+                    <th>Método de Pago</th>
+                    <th>Total</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Iteración sobre la lista de compras usando Thymeleaf -->
+                <tr th:each="compra : ${listadoCompras}">
+                    <!-- Datos de cada compra -->
+                    <td th:text="${compra.idCompra}"></td>
+                    <td th:text="${compra.cliente != null ? compra.cliente.nombre : 'Cliente no asignado'}"></td>
+                    <td th:text="${compra.producto != null ? compra.producto.nombre : 'Producto no asignado'}"></td>
+                    <td th:text="${compra.producto != null ? compra.producto.stock : 'Producto No hay stock'}"></td>
+                    <td th:text="${compra.producto != null ? compra.producto.precio : 'Producto No hay precio'}"></td>
+                    <td th:text="${compra.estado != null ? (compra.estado ? 'Válida' : 'Inválida') : 'Pendiente'}"></td>
+                    <td th:text="${compra.fecha}"></td>
+                    <td th:text="${compra.cantidad != null ? compra.cantidad : 'No especificada'}"></td>
+                    <td th:text="${compra.metodoPago != null ? compra.metodoPago : 'Método no especificado'}"></td>
+                    <td th:text="${compra.total != null ? '$ ' + compra.total : 'Total no calculado'}"></td>
+                    <td>
+                        <!-- Botón para editar la compra -->
+                        <a th:href="@{'/compras/editar/' + ${compra.idCompra}}" class="btn btn-success btn-sm">Editar</a>
+                        <!-- Botón para eliminar la compra -->
+                        <a th:href="@{'/compras/eliminar/' + ${compra.idCompra}}" class="btn btn-danger btn-sm">Eliminar</a>
+                        <!-- Botón para imprimir comprobante -->
+                        <button class="btn btn-info btn-sm" onclick="imprimirComprobante(this)" 
+                                data-cliente="${compra.cliente.nombre}" 
+                                data-dni="${compra.cliente.dni}" 
+                                data-producto="${compra.producto.nombre}" 
+                                data-cantidad="${compra.cantidad}" 
+                                data-precio="${compra.producto.precio}" 
+                                data-total="${compra.total}">
+                            Imprimir Comprobante
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Script para imprimir el comprobante -->
+    <script>
+        function imprimirComprobante(button) {
+            // Obtener datos del botón
+            const cliente = button.getAttribute("data-cliente");
+            const dni = button.getAttribute("data-dni");
+            const producto = button.getAttribute("data-producto");
+            const cantidad = button.getAttribute("data-cantidad");
+            const precio = button.getAttribute("data-precio");
+            const total = button.getAttribute("data-total");
+
+            // Crear el contenido del comprobante
+            const comprobante = `
+                <div style="font-family: Arial, sans-serif; text-align: center;">
+                    <h2>Comprobante de Compra</h2>
+                    <p><strong>Cliente:</strong> ${cliente}</p>
+                    <p><strong>DNI:</strong> ${dni}</p>
+                    <p><strong>Producto:</strong> ${producto}</p>
+                    <p><strong>Cantidad:</strong> ${cantidad}</p>
+                    <p><strong>Precio Unitario:</strong> $${precio}</p>
+                    <p><strong>Total a Pagar:</strong> $${total}</p>
+                    <p>¡Gracias por su compra!</p>
+                </div>`;
+
+            // Crear ventana para imprimir el comprobante
+            const ventana = window.open("", "_blank", "width=600,height=400");
+            ventana.document.write(comprobante);
+            ventana.document.close();
+            ventana.print();
+            ventana.close();
+        }
+    </script>
+
+    <!-- Script de Bootstrap -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" 
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" 
+            crossorigin="anonymous"></script>
+</body>
+</html>
