@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 
 @Component
 @Entity
@@ -19,25 +20,16 @@ public class Producto {
 	 private Double precio;
 	 @Column
 	 private Integer stock;
-	 private String imagenUrl;//A1
+	 @Lob
+	@Column (columnDefinition = "LONGTEXT")
+	 private String imagen;//A1
 	 @Column
-	    private Boolean eliminado;  // Nuevo atributo para eliminación lógica
+	 private Boolean eliminado;  // Nuevo atributo para eliminación lógica
  
-	public Producto() {
-		this.eliminado = false;  // Por defecto, una compra no está eliminada
-	}
+public Producto() {
+	// TODO Auto-generated constructor stub
+}
 
-	public Producto(String idProducto, String nombre, String descripcion, Double precio, Integer stock,
-			String imagenUrl, Boolean eliminado) {
-		super();
-		this.idProducto = idProducto;
-		this.nombre = nombre;
-		this.descripcion = descripcion;
-		this.precio = precio;
-		this.stock = stock;
-		this.imagenUrl = imagenUrl;
-		this.eliminado = eliminado;
-	}
 
 	public Boolean getEliminado() {
 		return eliminado;
@@ -47,12 +39,12 @@ public class Producto {
 		this.eliminado = eliminado;
 	}
 
-	public String getImagenUrl() {
-		return imagenUrl;
+	public String getImagen() {
+		return imagen;
 	}
 
-	public void setImagenUrl(String imagenUrl) {
-		this.imagenUrl = imagenUrl;
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 
 	public String getNombre() {

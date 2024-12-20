@@ -7,22 +7,21 @@ import org.springframework.stereotype.Component;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 
 @Component
 @Entity
 public class Compra {
-    @Id 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_compra")
     private String idCompra;
     @Column
     private Boolean estado;
-    @Column
-    private String nombreProducto;
-    @ManyToOne
-    private Cliente cliente;
-    @ManyToOne
-    private Producto producto;
     @DateTimeFormat(pattern = "yyyy-MM-dd") 
     @Column
     private LocalDate fecha;
@@ -32,36 +31,18 @@ public class Compra {
     private Integer cantidad;
     @Column
     private String metodoPago;
-    @Column
-    private Boolean eliminado;
 
+    @ManyToOne
+	@JoinColumn(name = "cliente_dni", nullable = false)
+    private Cliente cliente;
+    @ManyToOne
+	@JoinColumn(name = "producto_id", referencedColumnName = "idProducto")
+    private Producto producto;
     
-    public Compra() {
-        this.eliminado = false;
-    }
-
-    public Compra(String idCompra, Boolean estado, String nombreProducto, Cliente cliente, Producto producto,
-                  LocalDate fecha, Double total, Integer cantidad, String metodoPago, Boolean eliminado) {
-        this.idCompra = idCompra;
-        this.estado = estado;
-        this.nombreProducto = nombreProducto;
-        this.cliente = cliente;
-        this.producto = producto;
-        this.fecha = fecha;
-        this.total = total;
-        this.cantidad = cantidad;
-        this.metodoPago = metodoPago;
-        this.eliminado = eliminado;
-    }
-
-    public Boolean getEliminado() {
-        return eliminado;
-    }
-
-    public void setEliminado(Boolean eliminado) {
-        this.eliminado = eliminado;
-    }
-
+public Compra() {
+	// TODO Auto-generated constructor stub
+}
+    
     public Integer getCantidad() {
         return cantidad;
     }
@@ -76,14 +57,6 @@ public class Compra {
 
     public void setMetodoPago(String metodoPago) {
         this.metodoPago = metodoPago;
-    }
-
-    public String getNombreProducto() {
-        return nombreProducto;
-    }
-
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
     }
 
     public Producto getProducto() {
@@ -133,5 +106,11 @@ public class Compra {
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
+
+	public void setPrecioTotal(double d) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
