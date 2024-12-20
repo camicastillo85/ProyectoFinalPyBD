@@ -5,9 +5,12 @@ import java.util.List;
 import ar.edu.ies6.model.Compra;
 
 public interface CompraService {
-	List<Compra> listarTodos();
-    Compra guardar(Compra compra);
-    Compra obtenerPorId(String idCompra);
-    void eliminar(String idCompra);
-
+	//metodos que resuelven una tarea
+		public void guardarCompra (Compra compra);
+		public void eliminarCompra(String dniCliente);
+		public void modificarCompra(Compra compraModificada);
+		public Compra consultarCompraDni(String dniCliente);
+		public List<Compra> listarTodasCompras();
+		public List<Compra>listarTodasComprasActivas();
+		public Compra consultarCompraIdCompra(String idCompra);
 }

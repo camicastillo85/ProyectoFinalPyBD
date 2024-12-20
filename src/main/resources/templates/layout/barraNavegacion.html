@@ -6,12 +6,12 @@
 <title>IES N° 6</title>
 </head>
 <body>
-	<header>
+	<header data-th-fragment="barraNavegacion">
 		<!-- Barra de navegación -->
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
 			<div class="container-fluid">
 				<!-- Título o logo -->
-				<a class="navbar-brand" href="#">IES N° 6</a>
+				<a class="navbar-brand" href="/index">IES N° 6</a>
 
 				<!-- Botón para menú colapsable en pantallas pequeñas -->
 				<button class="navbar-toggler" type="button"
@@ -28,15 +28,19 @@
 						<li class="nav-item dropdown"><a
 							class="nav-link dropdown-toggle" href="#" id="opcionesDropdown"
 							role="button" data-bs-toggle="dropdown" aria-expanded="false">
-								Opciones </a>
+								Listas </a>
 							<ul class="dropdown-menu" aria-labelledby="opcionesDropdown">
-								<li><a class="dropdown-item" href="/clientes">Clientes</a></li>
-								<li><a class="dropdown-item" href="/productos">Productos</a></li>
-								<li><hr class="dropdown-divider"></li>
-								<li><a class="dropdown-item" href="/compras">Compras</a></li>
+								<li><a class="dropdown-item" href="/listadoClientes">Lista de Clientes</a></li>
+								<li><a class="dropdown-item" href="/listadoProducto">Lista de Productos</a></li>
 							</ul></li>
-						<li class="nav-item"><a class="nav-link disabled"
-							aria-disabled="true">Deshabilitado</a></li>
+						<li class="nav-item dropdown"><a
+							class="nav-link dropdown-toggle" href="#" id="opcionesDropdown"
+							role="button" data-bs-toggle="dropdown" aria-expanded="false">
+								Registros </a>
+							<ul class="dropdown-menu" aria-labelledby="opcionesDropdown">
+								<li><a class="dropdown-item" href="/registroCliente">Registro de Clientes</a></li>
+								<li><a class="dropdown-item" href="/registroProducto">Registro de Productos</a></li>
+							</ul></li>
 					</ul>
 
 					<!-- Barra de búsqueda -->

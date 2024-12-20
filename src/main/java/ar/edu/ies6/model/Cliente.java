@@ -22,22 +22,11 @@ public class Cliente {
 	@Column
 	private Boolean eliminado; 
     
-    
 	public Cliente() {
-		this.eliminado = false; 
+		// TODO Auto-generated constructor stub
 	}
+    
 	
-	
-	public Cliente(String dniCliente, String nombre, String email, String telefono, String direccion,
-			Boolean eliminado) {
-		super();
-		this.dniCliente = dniCliente;
-		this.nombre = nombre;
-		this.email = email;
-		this.telefono = telefono;
-		this.direccion = direccion;
-		this.eliminado = eliminado;
-	}
 
 	public Boolean getEliminado() {
 		return eliminado;
@@ -91,9 +80,5 @@ public class Cliente {
 		this.direccion = direccion;
 	}
 
-	public void addAttribute(String string, Iterable<Cliente> all) {
-		// TODO Auto-generated method stub
-		
-	}  
 
 }
